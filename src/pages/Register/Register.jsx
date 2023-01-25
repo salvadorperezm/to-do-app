@@ -25,7 +25,6 @@ export const Register = () => {
     initialValues: {
       firstName: "",
       lastName: "",
-      email: "",
       username: "",
       password: "",
     },
@@ -38,9 +37,6 @@ export const Register = () => {
         .min(2, "Last name must be at least 2 characters.")
         .max(25, "Last name is too large.")
         .required("Last name is required."),
-      email: Yup.string()
-        .email("Invalid email.")
-        .required("Email is required."),
       username: Yup.string().required("Username is required."),
       password: Yup.string().required("Password is required."),
     }),
@@ -85,20 +81,6 @@ export const Register = () => {
                 onChange={formik.handleChange}
               />
               <FormErrorMessage>{formik.errors.lastName}</FormErrorMessage>
-            </FormControl>
-          </Box>
-          <Box {...inputContainer}>
-            <FormControl
-              isInvalid={formik.errors.email && formik.touched.email}
-            >
-              <FormLabel>Email</FormLabel>
-              <Input
-                type="email"
-                name="email"
-                value={formik.values.email}
-                onChange={formik.handleChange}
-              />
-              <FormErrorMessage>{formik.errors.email}</FormErrorMessage>
             </FormControl>
           </Box>
           <Box {...inputContainer}>
