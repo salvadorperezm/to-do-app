@@ -12,7 +12,6 @@ export const mainContainer = {
 
 export const content = {
   area: `content`,
-  border: `1px solid red`,
 };
 
 export const footer = {

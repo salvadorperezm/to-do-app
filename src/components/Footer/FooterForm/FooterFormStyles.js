@@ -5,7 +5,6 @@ export const mainContainer = {
   justifyContent: { base: `center`, md: `space-between` },
   gap: { base: `5px` },
   padding: `10px`,
-  backgroundColor: `grey.400`,
 };
 
 export const iconsContainer = {
@@ -16,4 +15,8 @@ export const iconsContainer = {
 
 export const icon = {
   size: `20px`,
+};
+
+export const textContainer = {
+  display: { base: `none`, md: `block` },
 };

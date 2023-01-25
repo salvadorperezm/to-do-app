@@ -3,12 +3,17 @@ import { AiFillGithub } from "react-icons/ai";
 import { SiUpwork } from "react-icons/si";
 import { FaDiscord } from "react-icons/fa";
 
-import { icon, iconsContainer, mainContainer } from "./FooterFormStyles";
+import {
+  icon,
+  iconsContainer,
+  mainContainer,
+  textContainer,
+} from "./FooterFormStyles";
 
 export const FooterForm = () => {
   return (
     <Box {...mainContainer}>
-      <Box>
+      <Box {...textContainer}>
         <Link isExternal href="https://github.com/salvadorperezm">
           @salvadorperezm
         </Link>
