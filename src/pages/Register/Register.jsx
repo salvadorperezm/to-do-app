@@ -6,7 +6,9 @@ import {
   FormLabel,
   Text,
   Input,
+  useToast,
 } from "@chakra-ui/react";
+import axios from "axios";
 import { Link as RouterLink } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -21,6 +23,8 @@ import {
 import { FormLayout } from "../../layout";
 
 export const Register = () => {
+  const toast = useToast();
+
   const formik = useFormik({
     initialValues: {
       firstName: "",
@@ -41,11 +45,26 @@ export const Register = () => {
       password: Yup.string().required("Password is required."),
     }),
     onSubmit: async (values, actions) => {
+      const URL = import.meta.env.VITE_API_URL;
       try {
-        console.log(values);
+        const response = await axios.post(`${URL}/api/users`, values);
+        if (response.data)
+          toast({
+            title: "Account created.",
+            status: "success",
+            duration: 3000,
+            isClosable: true,
+            position: "top",
+          });
         actions.resetForm();
       } catch (error) {
-        console.log(error);
+        toast({
+          title: "Verify your credentials or internet connection.",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+          position: "top",
+        });
       }
     },
   });
