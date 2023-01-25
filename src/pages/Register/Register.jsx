@@ -1,9 +1,11 @@
 import { Box, Text } from "@chakra-ui/react";
 
+import { FormLayout } from "../../layout";
+
 export const Register = () => {
   return (
-    <Box>
+    <FormLayout>
       <Text>Register page</Text>
-    </Box>
+    </FormLayout>
   );
 };
