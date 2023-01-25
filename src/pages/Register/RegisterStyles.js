@@ -1,7 +1,6 @@
 export const container = {
   border: `1px solid red`,
   height: `100%`,
-  backgroundColor: `main`,
 };
 
 export const formContainer = {
