@@ -17,6 +17,10 @@ export const icon = {
   size: `20px`,
 };
 
+export const mailIcon = {
+  display: { base: `block`, md: `none` },
+};
+
 export const textContainer = {
   display: { base: `none`, md: `block` },
 };
