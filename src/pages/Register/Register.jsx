@@ -19,6 +19,8 @@ import {
   inputContainer,
   loginText,
   registerButton,
+  titleContainer,
+  titleText,
 } from "./RegisterStyles";
 import { FormLayout } from "../../layout";
 
@@ -64,6 +66,7 @@ export const Register = () => {
           duration: 3000,
           isClosable: true,
           position: "top",
+          color: "white",
         });
       }
     },
@@ -75,6 +78,9 @@ export const Register = () => {
         <Text></Text>
         <Box {...formContainer} as={"form"}>
           <Box {...inputContainer}>
+            <Box {...titleContainer}>
+              <Text {...titleText}>Register</Text>
+            </Box>
             <FormControl
               isInvalid={formik.errors.firstName && formik.touched.firstName}
             >
@@ -133,9 +139,9 @@ export const Register = () => {
           <Button {...registerButton} onClick={formik.handleSubmit}>
             Register
           </Button>
-          <Text {...loginText}>
-            Already have an account? <RouterLink to="/login">Login</RouterLink>
-          </Text>
+          <RouterLink to="/login">
+            <Text {...loginText}>Already have an account? Login</Text>
+          </RouterLink>
         </Box>
       </Box>
     </FormLayout>
