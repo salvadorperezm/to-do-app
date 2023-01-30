@@ -29,35 +29,24 @@ export const Register = () => {
 
   const formik = useFormik({
     initialValues: {
-      firstName: "",
-      lastName: "",
       username: "",
       password: "",
     },
     validationSchema: Yup.object({
-      firstName: Yup.string()
-        .min(2, "First name must be at least 2 characters.")
-        .max(25, "First name is too large.")
-        .required("First name is required."),
-      lastName: Yup.string()
-        .min(2, "Last name must be at least 2 characters.")
-        .max(25, "Last name is too large.")
-        .required("Last name is required."),
       username: Yup.string().required("Username is required."),
       password: Yup.string().required("Password is required."),
     }),
     onSubmit: async (values, actions) => {
       const URL = import.meta.env.VITE_API_URL;
       try {
-        const response = await axios.post(`${URL}/api/users`, values);
-        if (response.data)
-          toast({
-            title: "Account created.",
-            status: "success",
-            duration: 3000,
-            isClosable: true,
-            position: "top",
-          });
+        await axios.post(`${URL}/api/users`, values);
+        toast({
+          title: "Account created.",
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+          position: "top",
+        });
         actions.resetForm();
       } catch (error) {
         toast({
@@ -77,36 +66,8 @@ export const Register = () => {
       <Box {...container}>
         <Text></Text>
         <Box {...formContainer} as={"form"}>
-          <Box {...inputContainer}>
-            <Box {...titleContainer}>
-              <Text {...titleText}>Register</Text>
-            </Box>
-            <FormControl
-              isInvalid={formik.errors.firstName && formik.touched.firstName}
-            >
-              <FormLabel>First name</FormLabel>
-              <Input
-                type="text"
-                name="firstName"
-                value={formik.values.firstName}
-                onChange={formik.handleChange}
-              />
-              <FormErrorMessage>{formik.errors.firstName}</FormErrorMessage>
-            </FormControl>
-          </Box>
-          <Box {...inputContainer}>
-            <FormControl
-              isInvalid={formik.errors.lastName && formik.touched.lastName}
-            >
-              <FormLabel>Last name</FormLabel>
-              <Input
-                type="text"
-                name="lastName"
-                value={formik.values.lastName}
-                onChange={formik.handleChange}
-              />
-              <FormErrorMessage>{formik.errors.lastName}</FormErrorMessage>
-            </FormControl>
+          <Box {...titleContainer}>
+            <Text {...titleText}>Register</Text>
           </Box>
           <Box {...inputContainer}>
             <FormControl
