@@ -9,7 +9,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
@@ -23,9 +23,12 @@ import {
   titleContainer,
   titleText,
 } from "./LoginStyles";
+import { useAuth } from "../../utils/auth";
 
 export const Login = () => {
   const toast = useToast();
+  const auth = useAuth();
+  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
@@ -41,14 +44,16 @@ export const Login = () => {
     onSubmit: async (values, actions) => {
       const URL = import.meta.env.VITE_API_URL;
       try {
-        await axios.post(`${URL}/api/auth/login`, values);
-        toast({
-          title: "Login successfully.",
-          status: "success",
-          duration: 3000,
-          isClosable: true,
-          position: "top",
+        const tokenResponse = await axios.post(`${URL}/api/auth/login`, values);
+        const accessToken = tokenResponse.data.access_token;
+        const userResponse = await axios.get(`${URL}/api/auth/profile`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
         });
+        const user = userResponse.data;
+        auth.login(accessToken, user);
+        navigate("/");
         actions.resetForm();
       } catch (error) {
         toast({
@@ -100,7 +105,7 @@ export const Login = () => {
             </FormControl>
           </Box>
           <Button {...loginButton} onClick={formik.handleSubmit}>
-            Register
+            Login
           </Button>
           <RouterLink to="/register">
             <Text {...registerText}>Don't have an account? Register</Text>
