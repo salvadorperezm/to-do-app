@@ -33,7 +33,9 @@ export const Register = () => {
       password: "",
     },
     validationSchema: Yup.object({
-      username: Yup.string().required("Username is required."),
+      username: Yup.string()
+        .required("Username is required.")
+        .max(25, "Username max length exceeded"),
       password: Yup.string().required("Password is required."),
     }),
     onSubmit: async (values, actions) => {
