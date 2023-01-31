@@ -1,4 +1,6 @@
 import { Box, Button, Input, Text } from "@chakra-ui/react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { Task } from "../../components";
 import { HomeLayout } from "../../layout";
 import {
@@ -11,68 +13,27 @@ import {
 } from "./HomeStyles";
 
 export const Home = () => {
-  const tasks = [
-    {
-      id: 1,
-      title: "This is a really long name to see what happens in this case",
-      isCompleted: false,
-    },
-    {
-      id: 2,
-      title: "task 1",
-      isCompleted: false,
-    },
-    {
-      id: 3,
-      title: "task 1",
-      isCompleted: true,
-    },
-    {
-      id: 4,
-      title: "task 1",
-      isCompleted: false,
-    },
-    {
-      id: 5,
-      title: "task 1",
-      isCompleted: true,
-    },
-    {
-      id: 6,
-      title: "task 1",
-      isCompleted: true,
-    },
-    {
-      id: 7,
-      title: "task 1",
-      isCompleted: false,
-    },
-    {
-      id: 8,
-      title: "task 1",
-      isCompleted: true,
-    },
-    {
-      id: 9,
-      title: "task 1",
-      isCompleted: false,
-    },
-    {
-      id: 10,
-      title: "task 1",
-      isCompleted: false,
-    },
-    {
-      id: 11,
-      title: "task 1",
-      isCompleted: true,
-    },
-    {
-      id: 12,
-      title: "task 1",
-      isCompleted: false,
-    },
-  ];
+  const [tasks, setTasks] = useState([]);
+
+  useEffect(() => {
+    fetchTasks();
+  }, []);
+
+  const fetchTasks = async () => {
+    try {
+      const URL = import.meta.env.VITE_API_URL;
+      const user = JSON.parse(localStorage.getItem("user"));
+      const accessToken = localStorage.getItem("accessToken");
+      const response = await axios.get(`${URL}/api/users/${user.id}/tasks`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      setTasks(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <HomeLayout>
