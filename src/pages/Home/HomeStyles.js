@@ -39,6 +39,6 @@ export const formContainer = {
 
 export const tasksContainer = {
   height: `250px`,
-  border: `1px solid red  `,
+  // border: `1px solid red  `,
   overflowX: `scroll`,
 };
