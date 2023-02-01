@@ -1,14 +1,15 @@
 import { Box, Link, Text } from "@chakra-ui/react";
 
-import { container, headerTitle } from "./HeaderStyles";
-import { useAuth } from "../../utils/auth";
+import { Logo } from "../Logo";
+import { container, logo } from "./HeaderStyles";
+
+import { HeaderMenu } from "../Menu";
 
 export const Header = () => {
-  const auth = useAuth();
   return (
     <Box {...container}>
-      <Text {...headerTitle}>To-Do App</Text>
-      <Link onClick={auth.logout}>Logout</Link>
+      <Logo />
+      <HeaderMenu />
     </Box>
   );
 };
