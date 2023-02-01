@@ -4,7 +4,7 @@ import { TaskMenu } from "../Menu";
 
 import { checkbox, container, lineThroughText, taskTitle } from "./TaskStyles";
 
-export const Task = ({ task, fetchTasks }) => {
+export const Task = ({ task, fetchTasks, fetchTasksWithSpinnerAnimation }) => {
   const toast = useToast();
 
   const trimTaskTitle = (taskTitle) => {
@@ -67,7 +67,10 @@ export const Task = ({ task, fetchTasks }) => {
           <Text {...taskTitle}>{trimTaskTitle(task.title)}</Text>
         </>
       )}
-      <TaskMenu task={task} fetchTasks={fetchTasks} />
+      <TaskMenu
+        task={task}
+        fetchTasksWithSpinnerAnimation={fetchTasksWithSpinnerAnimation}
+      />
     </Box>
   );
 };

@@ -61,3 +61,17 @@ export const addTaskButton = {
     color: `white`,
   },
 };
+
+export const spinnerContainer = {
+  height: `250px`,
+  display: `flex`,
+  alignItems: `center`,
+  justifyContent: `center`,
+};
+
+export const spinner = {
+  color: `main`,
+  emptyColor: `lightgrey`,
+  thickness: `4px`,
+  size: `xl`,
+};
