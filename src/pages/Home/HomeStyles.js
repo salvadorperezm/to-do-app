@@ -39,6 +39,20 @@ export const formContainer = {
 
 export const tasksContainer = {
   height: `250px`,
-  // border: `1px solid red  `,
   overflowX: `scroll`,
+};
+
+export const noTasksText = {
+  mt: `20px`,
+  fontSize: `18px`,
+  textAlign: `center`,
+};
+
+export const addTaskButton = {
+  backgroundColor: `main`,
+  color: `white`,
+  _hover: {
+    backgroundColor: `main`,
+    color: `white`,
+  },
 };
