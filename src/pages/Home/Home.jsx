@@ -6,11 +6,12 @@ import {
   Input,
   Text,
   useToast,
+  Spinner,
 } from "@chakra-ui/react";
 import * as Yup from "yup";
 import axios from "axios";
 import { useFormik } from "formik";
-import { useEffect, useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import { Task } from "../../components";
 import { HomeLayout } from "../../layout";
 import {
@@ -22,18 +23,40 @@ import {
   headerTitle,
   noTasksContainer,
   noTasksText,
+  spinner,
+  spinnerContainer,
   tasksContainer,
 } from "./HomeStyles";
 
 export const Home = () => {
   const [tasks, setTasks] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isSpinnerLoading, setIsSpinnerLoading] = useState(false);
 
   const toast = useToast();
 
-  useEffect(() => {
-    fetchTasks();
+  useLayoutEffect(() => {
+    fetchTasksWithSpinnerAnimation();
   }, []);
+
+  const fetchTasksWithSpinnerAnimation = async () => {
+    setIsSpinnerLoading(true);
+    try {
+      const URL = import.meta.env.VITE_API_URL;
+      const user = JSON.parse(localStorage.getItem("user"));
+      const accessToken = localStorage.getItem("accessToken");
+      const response = await axios.get(`${URL}/api/users/${user.id}/tasks`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      setTasks(response.data);
+      setIsSpinnerLoading(false);
+    } catch (error) {
+      console.error(error);
+      setIsSpinnerLoading(false);
+    }
+  };
 
   const fetchTasks = async () => {
     try {
@@ -113,10 +136,21 @@ export const Home = () => {
               +
             </Button>
           </Box>
-          {tasks && tasks.length > 0 ? (
+          {isSpinnerLoading ? (
+            <Box {...spinnerContainer}>
+              <Spinner {...spinner} />
+            </Box>
+          ) : tasks && tasks.length > 0 ? (
             <Box {...tasksContainer}>
               {tasks.map((task) => (
-                <Task key={task.id} task={task} fetchTasks={fetchTasks} />
+                <Task
+                  key={task.id}
+                  task={task}
+                  fetchTasks={fetchTasks}
+                  fetchTasksWithSpinnerAnimation={
+                    fetchTasksWithSpinnerAnimation
+                  }
+                />
               ))}
             </Box>
           ) : (

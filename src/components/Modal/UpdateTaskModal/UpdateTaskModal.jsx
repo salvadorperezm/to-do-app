@@ -19,7 +19,12 @@ import { container, updateButton } from "./UpdateTaskModalStyles";
 import axios from "axios";
 import { useState } from "react";
 
-export const UpdateTaskModal = ({ task, isOpen, onClose, fetchTasks }) => {
+export const UpdateTaskModal = ({
+  task,
+  isOpen,
+  onClose,
+  fetchTasksWithSpinnerAnimation,
+}) => {
   const [isLoading, setIsLoading] = useState(false);
 
   const toast = useToast();
@@ -48,7 +53,7 @@ export const UpdateTaskModal = ({ task, isOpen, onClose, fetchTasks }) => {
           }
         );
         setIsLoading(false);
-        fetchTasks();
+        fetchTasksWithSpinnerAnimation();
         onClose();
       } catch (error) {
         setIsLoading(false);

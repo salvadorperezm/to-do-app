@@ -11,7 +11,7 @@ import { AiOutlineEdit } from "react-icons/ai";
 import { BsTrash } from "react-icons/bs";
 import { UpdateTaskModal, DeleteTaskModal } from "../../Modal";
 
-export const TaskMenu = ({ task, fetchTasks }) => {
+export const TaskMenu = ({ task, fetchTasksWithSpinnerAnimation }) => {
   const {
     isOpen: isUpdateOpen,
     onOpen: onUpdateOpen,
@@ -41,7 +41,7 @@ export const TaskMenu = ({ task, fetchTasks }) => {
           isOpen={isUpdateOpen}
           onOpen={onUpdateOpen}
           onClose={onUpdateClose}
-          fetchTasks={fetchTasks}
+          fetchTasksWithSpinnerAnimation={fetchTasksWithSpinnerAnimation}
         />
       )}
       {isDeleteOpen && (
@@ -50,7 +50,7 @@ export const TaskMenu = ({ task, fetchTasks }) => {
           isOpen={isDeleteOpen}
           onOpen={onDeleteOpen}
           onClose={onDeleteClose}
-          fetchTasks={fetchTasks}
+          fetchTasksWithSpinnerAnimation={fetchTasksWithSpinnerAnimation}
         />
       )}
     </Menu>

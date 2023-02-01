@@ -20,7 +20,7 @@ export const DeleteTaskModal = ({
   isOpen,
   onOpen,
   onClose,
-  fetchTasks,
+  fetchTasksWithSpinnerAnimation,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
 
@@ -38,7 +38,7 @@ export const DeleteTaskModal = ({
         },
       });
       setIsLoading(false);
-      fetchTasks();
+      fetchTasksWithSpinnerAnimation();
       onClose();
     } catch (error) {
       toast({
