@@ -40,6 +40,13 @@ export const DeleteTaskModal = ({
       setIsLoading(false);
       fetchTasksWithSpinnerAnimation();
       onClose();
+      toast({
+        title: "Task deleted.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+        position: "top",
+      });
     } catch (error) {
       toast({
         title: "An error occurred.",
