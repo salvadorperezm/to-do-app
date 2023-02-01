@@ -23,8 +23,11 @@ import {
   titleText,
 } from "./RegisterStyles";
 import { FormLayout } from "../../layout";
+import { useState } from "react";
 
 export const Register = () => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const toast = useToast();
 
   const formik = useFormik({
@@ -39,8 +42,9 @@ export const Register = () => {
       password: Yup.string().required("Password is required."),
     }),
     onSubmit: async (values, actions) => {
-      const URL = import.meta.env.VITE_API_URL;
+      setIsLoading(true);
       try {
+        const URL = import.meta.env.VITE_API_URL;
         await axios.post(`${URL}/api/users`, values);
         toast({
           title: "Account created.",
@@ -50,6 +54,7 @@ export const Register = () => {
           position: "top",
         });
         actions.resetForm();
+        setIsLoading(false);
       } catch (error) {
         toast({
           title: "Verify your credentials or internet connection.",
@@ -59,6 +64,7 @@ export const Register = () => {
           position: "top",
           color: "white",
         });
+        setIsLoading(false);
       }
     },
   });
@@ -99,7 +105,11 @@ export const Register = () => {
               <FormErrorMessage>{formik.errors.password}</FormErrorMessage>
             </FormControl>
           </Box>
-          <Button {...registerButton} onClick={formik.handleSubmit}>
+          <Button
+            {...registerButton}
+            onClick={formik.handleSubmit}
+            isLoading={isLoading}
+          >
             Register
           </Button>
           <RouterLink to="/login">

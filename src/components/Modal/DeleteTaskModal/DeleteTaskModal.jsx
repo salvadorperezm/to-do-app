@@ -11,6 +11,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
+import { useState } from "react";
 
 import { container, deleteButton } from "./DeleteTaskModalStyles";
 
@@ -21,8 +22,12 @@ export const DeleteTaskModal = ({
   onClose,
   fetchTasks,
 }) => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const toast = useToast();
+
   const deleteTask = async () => {
+    setIsLoading(true);
     try {
       const URL = import.meta.env.VITE_API_URL;
       const user = JSON.parse(localStorage.getItem("user"));
@@ -32,6 +37,7 @@ export const DeleteTaskModal = ({
           Authorization: `Bearer ${accessToken}`,
         },
       });
+      setIsLoading(false);
       fetchTasks();
       onClose();
     } catch (error) {
@@ -42,6 +48,7 @@ export const DeleteTaskModal = ({
         isClosable: true,
         position: "top",
       });
+      setIsLoading(false);
     }
   };
 
@@ -54,9 +61,8 @@ export const DeleteTaskModal = ({
         <ModalBody>
           <Text>Are you sure? This can't be undone</Text>
         </ModalBody>
-
         <ModalFooter>
-          <Button {...deleteButton} onClick={deleteTask}>
+          <Button {...deleteButton} onClick={deleteTask} isLoading={isLoading}>
             Delete
           </Button>
         </ModalFooter>

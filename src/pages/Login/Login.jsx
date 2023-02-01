@@ -24,8 +24,11 @@ import {
   titleText,
 } from "./LoginStyles";
 import { useAuth } from "../../utils/auth";
+import { useState } from "react";
 
 export const Login = () => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const toast = useToast();
   const auth = useAuth();
   const navigate = useNavigate();
@@ -42,8 +45,9 @@ export const Login = () => {
       password: Yup.string().required("Password is required."),
     }),
     onSubmit: async (values, actions) => {
-      const URL = import.meta.env.VITE_API_URL;
+      setIsLoading(true);
       try {
+        const URL = import.meta.env.VITE_API_URL;
         const tokenResponse = await axios.post(`${URL}/api/auth/login`, values);
         const accessToken = tokenResponse.data.access_token;
         const userResponse = await axios.get(`${URL}/api/auth/profile`, {
@@ -51,11 +55,13 @@ export const Login = () => {
             Authorization: `Bearer ${accessToken}`,
           },
         });
+        setIsLoading(false);
         const user = userResponse.data;
         auth.login(accessToken, user);
         navigate("/");
         actions.resetForm();
       } catch (error) {
+        setIsLoading(false);
         toast({
           title: "Verify your credentials or internet connection.",
           status: "error",
@@ -104,7 +110,11 @@ export const Login = () => {
               <FormErrorMessage>{formik.errors.password}</FormErrorMessage>
             </FormControl>
           </Box>
-          <Button {...loginButton} onClick={formik.handleSubmit}>
+          <Button
+            {...loginButton}
+            onClick={formik.handleSubmit}
+            isLoading={isLoading}
+          >
             Login
           </Button>
           <RouterLink to="/register">

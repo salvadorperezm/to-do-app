@@ -27,6 +27,8 @@ import {
 
 export const Home = () => {
   const [tasks, setTasks] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
   const toast = useToast();
 
   useEffect(() => {
@@ -57,6 +59,7 @@ export const Home = () => {
       title: Yup.string().required("Task is required"),
     }),
     onSubmit: async (values, actions) => {
+      setIsLoading(true);
       try {
         const URL = import.meta.env.VITE_API_URL;
         const user = JSON.parse(localStorage.getItem("user"));
@@ -68,6 +71,7 @@ export const Home = () => {
         });
         actions.resetForm();
         fetchTasks();
+        setIsLoading(false);
       } catch (error) {
         toast({
           title: "An error occurred.",
@@ -76,6 +80,7 @@ export const Home = () => {
           isClosable: true,
           position: "top",
         });
+        setIsLoading(false);
       }
     },
   });
@@ -100,7 +105,11 @@ export const Home = () => {
               />
               <FormErrorMessage>{formik.errors.title}</FormErrorMessage>
             </FormControl>
-            <Button onClick={formik.handleSubmit} {...addTaskButton}>
+            <Button
+              onClick={formik.handleSubmit}
+              {...addTaskButton}
+              isLoading={isLoading}
+            >
               +
             </Button>
           </Box>
