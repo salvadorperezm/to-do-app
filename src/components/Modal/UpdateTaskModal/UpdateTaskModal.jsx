@@ -55,6 +55,13 @@ export const UpdateTaskModal = ({
         setIsLoading(false);
         fetchTasksWithSpinnerAnimation();
         onClose();
+        toast({
+          position: "top",
+          title: "Task updated.",
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+        });
       } catch (error) {
         setIsLoading(false);
         toast({
