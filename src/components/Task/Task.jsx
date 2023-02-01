@@ -1,10 +1,12 @@
-import { Box, Checkbox, Text } from "@chakra-ui/react";
+import { Box, Checkbox, Text, useToast } from "@chakra-ui/react";
 import axios from "axios";
 import { TaskMenu } from "../Menu";
 
 import { checkbox, container, lineThroughText, taskTitle } from "./TaskStyles";
 
 export const Task = ({ task, fetchTasks }) => {
+  const toast = useToast();
+
   const trimTaskTitle = (taskTitle) => {
     const maxNumOfLetters = 30;
     if (taskTitle.length > maxNumOfLetters) {
@@ -33,7 +35,13 @@ export const Task = ({ task, fetchTasks }) => {
       );
       fetchTasks();
     } catch (error) {
-      console.error(error);
+      toast({
+        title: "An error occurred.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+        position: "top",
+      });
     }
   };
 
