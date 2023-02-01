@@ -5,6 +5,7 @@ import {
   FormErrorMessage,
   Input,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import * as Yup from "yup";
 import axios from "axios";
@@ -25,6 +26,7 @@ import {
 
 export const Home = () => {
   const [tasks, setTasks] = useState([]);
+  const toast = useToast();
 
   useEffect(() => {
     fetchTasks();
@@ -66,7 +68,13 @@ export const Home = () => {
         actions.resetForm();
         fetchTasks();
       } catch (error) {
-        console.error(error);
+        toast({
+          title: "An error occurred.",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+          position: "top",
+        });
       }
     },
   });

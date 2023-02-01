@@ -8,6 +8,7 @@ import {
   ModalBody,
   ModalCloseButton,
   Text,
+  useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
 
@@ -20,6 +21,7 @@ export const DeleteTaskModal = ({
   onClose,
   fetchTasks,
 }) => {
+  const toast = useToast();
   const deleteTask = async () => {
     try {
       const URL = import.meta.env.VITE_API_URL;
@@ -33,7 +35,13 @@ export const DeleteTaskModal = ({
       fetchTasks();
       onClose();
     } catch (error) {
-      console.error(error);
+      toast({
+        title: "An error occurred.",
+        status: "error",
+        duration: 3000,
+        isClosable: true,
+        position: "top",
+      });
     }
   };
 

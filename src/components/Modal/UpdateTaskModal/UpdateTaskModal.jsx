@@ -10,6 +10,7 @@ import {
   Input,
   FormControl,
   FormErrorMessage,
+  useToast,
 } from "@chakra-ui/react";
 import * as Yup from "yup";
 import { useFormik } from "formik";
@@ -18,6 +19,8 @@ import { container, updateButton } from "./UpdateTaskModalStyles";
 import axios from "axios";
 
 export const UpdateTaskModal = ({ task, isOpen, onClose, fetchTasks }) => {
+  const toast = useToast();
+
   const formik = useFormik({
     initialValues: {
       title: task.title,
@@ -43,7 +46,13 @@ export const UpdateTaskModal = ({ task, isOpen, onClose, fetchTasks }) => {
         fetchTasks();
         onClose();
       } catch (error) {
-        console.error(error);
+        toast({
+          title: "An error occurred.",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+          position: "top",
+        });
       }
     },
   });
