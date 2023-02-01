@@ -50,6 +50,7 @@ export const TaskMenu = ({ task, fetchTasks }) => {
           isOpen={isDeleteOpen}
           onOpen={onDeleteOpen}
           onClose={onDeleteClose}
+          fetchTasks={fetchTasks}
         />
       )}
     </Menu>
