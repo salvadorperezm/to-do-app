@@ -42,10 +42,15 @@ export const tasksContainer = {
   overflowX: `scroll`,
 };
 
+export const noTasksContainer = {
+  height: `250px`,
+  display: `flex`,
+  alignItems: `center`,
+  justifyContent: `center`,
+};
+
 export const noTasksText = {
-  mt: `20px`,
-  fontSize: `18px`,
-  textAlign: `center`,
+  fontSize: `20px`,
 };
 
 export const addTaskButton = {

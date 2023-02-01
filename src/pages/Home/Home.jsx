@@ -20,6 +20,7 @@ import {
   formContainer,
   headerText,
   headerTitle,
+  noTasksContainer,
   noTasksText,
   tasksContainer,
 } from "./HomeStyles";
@@ -103,15 +104,17 @@ export const Home = () => {
               +
             </Button>
           </Box>
-          <Box {...tasksContainer}>
-            {tasks && tasks.length > 0 ? (
-              tasks.map((task) => (
+          {tasks && tasks.length > 0 ? (
+            <Box {...tasksContainer}>
+              {tasks.map((task) => (
                 <Task key={task.id} task={task} fetchTasks={fetchTasks} />
-              ))
-            ) : (
+              ))}
+            </Box>
+          ) : (
+            <Box {...noTasksContainer}>
               <Text {...noTasksText}>No tasks yet</Text>
-            )}
-          </Box>
+            </Box>
+          )}
         </Box>
       </Box>
     </HomeLayout>
