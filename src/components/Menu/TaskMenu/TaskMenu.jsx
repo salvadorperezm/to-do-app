@@ -10,6 +10,7 @@ import { SlOptions } from "react-icons/sl";
 import { AiOutlineEdit } from "react-icons/ai";
 import { BsTrash } from "react-icons/bs";
 import { UpdateTaskModal, DeleteTaskModal } from "../../Modal";
+import { deleteOptionIcon, deleteOptionText } from "./TaskMenuStyles";
 
 export const TaskMenu = ({ task, fetchTasksWithSpinnerAnimation }) => {
   const {
@@ -28,10 +29,16 @@ export const TaskMenu = ({ task, fetchTasksWithSpinnerAnimation }) => {
     <Menu isLazy>
       <MenuButton as={IconButton} icon={<SlOptions />} variant={"ghost"} />
       <MenuList>
-        <MenuItem icon={<AiOutlineEdit />} onClick={onUpdateOpen}>
-          Update Task
-        </MenuItem>
-        <MenuItem icon={<BsTrash />} onClick={onDeleteOpen}>
+        {!task.isCompleted && (
+          <MenuItem icon={<AiOutlineEdit />} onClick={onUpdateOpen}>
+            Update Task
+          </MenuItem>
+        )}
+        <MenuItem
+          icon={<BsTrash {...deleteOptionIcon} />}
+          onClick={onDeleteOpen}
+          {...deleteOptionText}
+        >
           Delete Task
         </MenuItem>
       </MenuList>
