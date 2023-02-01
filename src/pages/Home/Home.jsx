@@ -79,8 +79,11 @@ export const Home = () => {
             <Text {...headerText}>To-Do List</Text>
           </Box>
           <Box {...formContainer} as={"form"}>
-            <FormControl>
+            <FormControl
+              isInvalid={formik.errors.title && formik.touched.title}
+            >
               <Input
+                type={"text"}
                 placeholder="Add a new task"
                 name="title"
                 value={formik.values.title}
@@ -94,7 +97,9 @@ export const Home = () => {
           </Box>
           <Box {...tasksContainer}>
             {tasks && tasks.length > 0 ? (
-              tasks.map((task) => <Task key={task.id} task={task} />)
+              tasks.map((task) => (
+                <Task key={task.id} task={task} fetchTasks={fetchTasks} />
+              ))
             ) : (
               <Text {...noTasksText}>No tasks yet</Text>
             )}

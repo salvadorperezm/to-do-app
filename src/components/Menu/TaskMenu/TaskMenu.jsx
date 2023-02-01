@@ -11,7 +11,7 @@ import { AiOutlineEdit } from "react-icons/ai";
 import { BsTrash } from "react-icons/bs";
 import { UpdateTaskModal, DeleteTaskModal } from "../../Modal";
 
-export const TaskMenu = ({ task }) => {
+export const TaskMenu = ({ task, fetchTasks }) => {
   const {
     isOpen: isUpdateOpen,
     onOpen: onUpdateOpen,
@@ -41,6 +41,7 @@ export const TaskMenu = ({ task }) => {
           isOpen={isUpdateOpen}
           onOpen={onUpdateOpen}
           onClose={onUpdateClose}
+          fetchTasks={fetchTasks}
         />
       )}
       {isDeleteOpen && (

@@ -3,7 +3,7 @@ import { TaskMenu } from "../Menu";
 
 import { checkbox, container, lineThroughText, taskTitle } from "./TaskStyles";
 
-export const Task = ({ task }) => {
+export const Task = ({ task, fetchTasks }) => {
   const trimTaskTitle = (taskTitle) => {
     const maxNumOfLetters = 30;
     if (taskTitle.length > maxNumOfLetters) {
@@ -28,7 +28,7 @@ export const Task = ({ task }) => {
           <Text {...taskTitle}>{trimTaskTitle(task.title)}</Text>
         </>
       )}
-      <TaskMenu task={task} />
+      <TaskMenu task={task} fetchTasks={fetchTasks} />
     </Box>
   );
 };
