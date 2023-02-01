@@ -17,8 +17,11 @@ import { useFormik } from "formik";
 
 import { container, updateButton } from "./UpdateTaskModalStyles";
 import axios from "axios";
+import { useState } from "react";
 
 export const UpdateTaskModal = ({ task, isOpen, onClose, fetchTasks }) => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const toast = useToast();
 
   const formik = useFormik({
@@ -30,6 +33,7 @@ export const UpdateTaskModal = ({ task, isOpen, onClose, fetchTasks }) => {
       title: Yup.string().required("Title is required"),
     }),
     onSubmit: async (values) => {
+      setIsLoading(true);
       try {
         const URL = import.meta.env.VITE_API_URL;
         const user = JSON.parse(localStorage.getItem("user"));
@@ -43,9 +47,11 @@ export const UpdateTaskModal = ({ task, isOpen, onClose, fetchTasks }) => {
             },
           }
         );
+        setIsLoading(false);
         fetchTasks();
         onClose();
       } catch (error) {
+        setIsLoading(false);
         toast({
           title: "An error occurred.",
           status: "error",
@@ -76,7 +82,11 @@ export const UpdateTaskModal = ({ task, isOpen, onClose, fetchTasks }) => {
         </ModalBody>
 
         <ModalFooter>
-          <Button {...updateButton} onClick={formik.handleSubmit}>
+          <Button
+            {...updateButton}
+            onClick={formik.handleSubmit}
+            isLoading={isLoading}
+          >
             Update
           </Button>
         </ModalFooter>
