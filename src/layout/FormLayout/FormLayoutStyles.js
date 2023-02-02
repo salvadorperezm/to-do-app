@@ -3,11 +3,16 @@ export const mainContainer = {
   height: `100vh`,
   display: `grid`,
   gridTemplateAreas: `
+    header
     content
     footer
   `,
   gridTemplateColumns: `1fr`,
-  gridTemplateRows: `1fr auto`,
+  gridTemplateRows: `auto 1fr auto`,
+};
+
+export const header = {
+  area: `header`,
 };
 
 export const content = {
